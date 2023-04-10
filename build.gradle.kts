@@ -25,13 +25,13 @@ allprojects {
     }
 
     dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.4")
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.4")
 
-        implementation("org.springframework:spring-context:6.0.6")
-        implementation("javax.annotation:javax.annotation-api:1.3.2")
+        api("org.springframework:spring-context:6.0.6")
+        api("javax.annotation:javax.annotation-api:1.3.2")
 
-        implementation("net.kyori:adventure-api:4.13.0")
+        api("net.kyori:adventure-api:4.13.0")
     }
 }
 
@@ -56,11 +56,13 @@ childProjects.values.forEach { rootProj ->
             }
 
             // Если это не dist, то подключаем его к dist
+            // И публишим в репу
             if (typeProj.name != "dist") {
                 findProject(":${rootProj.name}:${platformProj.name}:dist")?.let {
                     it.dependencies { api(typeProj) }
                     println("${it.path} depends on ${typeProj.path}")
                 }
+                typeProj.configurePublishing()
             }
 
             // Если это не api, подключаем к нему api
@@ -84,6 +86,30 @@ childProjects.values.forEach { rootProj ->
                 findProject(":core:${platformProj.name}:api")?.let {
                     typeProj.dependencies { api(it) }
                     println("${typeProj.path} depends on ${it.path}")
+                }
+            }
+        }
+    }
+}
+
+fun Project.configurePublishing() {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = "ru.melonhell.uma"
+                artifactId = "uma-" + this@configurePublishing.path.substring(1).replace(":", "-")
+                from(components["java"])
+            }
+        }
+
+        repositories {
+            mavenLocal()
+            maven {
+                name = "repo.spliterash"
+                url = uri("https://repo.spliterash.ru/" + rootProject.name)
+                credentials {
+                    username = findProperty("SPLITERASH_NEXUS_USR")?.toString()
+                    password = findProperty("SPLITERASH_NEXUS_PSW")?.toString()
                 }
             }
         }
