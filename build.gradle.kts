@@ -35,10 +35,12 @@ allprojects {
     }
 }
 
+// Тут крч магическая конфигурация зависимостей всех модулей
 childProjects.values.forEach { rootProj ->
     rootProj.childProjects.values.forEach { platformProj ->
         platformProj.childProjects.values.forEach { typeProj ->
 
+            // Ко всему, что баккит подключаем апи баккита
             if (platformProj.name == "bukkit") {
                 typeProj.dependencies {
                     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
@@ -46,37 +48,42 @@ childProjects.values.forEach { rootProj ->
                 }
             }
 
+            // Ко всему, что майнстом подключаем апи майнстома
             if (platformProj.name == "minestom") {
                 typeProj.dependencies {
                     compileOnly("com.github.Minestom.Minestom:Minestom:8ad2c7701f")
                 }
             }
 
-            if (typeProj.name == "dist") {
-                findProject(":${rootProj.name}:${platformProj.name}:impl")?.let {
-                    typeProj.dependencies { api(it)}
+            // Если это не dist, то подключаем его к dist
+            if (typeProj.name != "dist") {
+                findProject(":${rootProj.name}:${platformProj.name}:dist")?.let {
+                    it.dependencies { api(typeProj) }
+                    println("${it.path} depends on ${typeProj.path}")
+                }
+            }
+
+            // Если это не api, подключаем к нему api
+            if (typeProj.name != "api") {
+                findProject(":${rootProj.name}:${platformProj.name}:api")?.let {
+                    typeProj.dependencies { api(it) }
                     println("${typeProj.path} depends on ${it.path}")
                 }
-            } else {
-                if (typeProj.name != "api") {
-                    findProject(":${rootProj.name}:${platformProj.name}:api")?.let {
-                        typeProj.dependencies { api(it)}
-                        println("${typeProj.path} depends on ${it.path}")
-                    }
-                }
+            }
 
-                if (platformProj.name != "common") {
-                    findProject(":${rootProj.name}:common:${typeProj.name}")?.let {
-                        typeProj.dependencies {api(it)}
-                        println("${typeProj.path} depends on ${it.path}")
-                    }
+            // Если это не common, подключаем к нему common
+            if (platformProj.name != "common") {
+                findProject(":${rootProj.name}:common:${typeProj.name}")?.let {
+                    typeProj.dependencies { api(it) }
+                    println("${typeProj.path} depends on ${it.path}")
                 }
+            }
 
-                if (rootProj.name != "core") {
-                    findProject(":core:${platformProj.name}:${typeProj.name}")?.let {
-                        typeProj.dependencies {api(it)}
-                        println("${typeProj.path} depends on ${it.path}")
-                    }
+            // Если это не core, подключаем к нему core (но только апишки)
+            if (rootProj.name != "core") {
+                findProject(":core:${platformProj.name}:api")?.let {
+                    typeProj.dependencies { api(it) }
+                    println("${typeProj.path} depends on ${it.path}")
                 }
             }
         }
