@@ -1,10 +1,13 @@
 package ru.melonhell.uma.core.bukkit.api.wrappers
 
+import net.kyori.adventure.audience.Audience
 import org.bukkit.entity.Player
 import ru.melonhell.uma.core.common.api.wrappers.UmaPlayer
-import java.util.UUID
+import java.util.*
 
-class BukkitPlayer(override val handle: Player) : BukkitCommandSender(handle), UmaPlayer {
+class BukkitPlayer(
+    override val handle: Player
+) : BukkitCommandSender(handle), UmaPlayer, Audience by handle {
     override val name: String get() = handle.name
     override val uuid: UUID get() = handle.uniqueId
 
