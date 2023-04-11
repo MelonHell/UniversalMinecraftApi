@@ -18,13 +18,14 @@ import java.util.function.Function
 
 
 @Configuration
-class BukkitCloudCommandRegisterer(
-    javaPlugin: JavaPlugin
+class BukkitCloudCommandBeanPostProcessor(
+    private val javaPlugin: JavaPlugin
 ) : BeanPostProcessor {
     private val manager: PaperCommandManager<UmaCommandSender>
     private val annotationParser: AnnotationParser<UmaCommandSender>
 
     init {
+        javaPlugin.getLogger().info("§b BukkitCloudCommandBeanPostProcessor init by ${javaPlugin.name}")
         val executionCoordinatorFunction =
             AsynchronousCommandExecutionCoordinator.builder<UmaCommandSender>().build()
         manager = PaperCommandManager(
@@ -47,7 +48,10 @@ class BukkitCloudCommandRegisterer(
     }
 
     override fun postProcessAfterInitialization(bean: Any, beanName: String): Any? {
-        if (bean.javaClass.isAnnotationPresent(CloudCommand::class.java)) annotationParser.parse(bean)
+        if (bean.javaClass.isAnnotationPresent(CloudCommand::class.java)) {
+            annotationParser.parse(bean)
+            javaPlugin.getLogger().info("§bregistered command ${bean.javaClass.name}")
+        }
         return bean
     }
 }
