@@ -28,7 +28,7 @@ allprojects {
         api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.4")
 
-        api("org.springframework:spring-context:6.0.6")
+        api("org.springframework.boot:spring-boot-starter:3.0.5")
         api("javax.annotation:javax.annotation-api:1.3.2")
 
         api("net.kyori:adventure-api:4.13.0")
@@ -44,7 +44,7 @@ childProjects.values.forEach { rootProj ->
             if (platformProj.name == "bukkit") {
                 typeProj.dependencies {
                     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
-                    compileOnly("ru.spliterash:spring-spigot:1.0.6")
+                    compileOnly("ru.spliterash:spring-spigot:1.0.11")
                 }
             }
 
