@@ -35,59 +35,61 @@ allprojects {
     }
 }
 
+fun Project.apiDependency(dependency: Project) {
+    dependencies { api(dependency) }
+    println("${this.path} depends on ${dependency.path}")
+}
+
 // Тут крч магическая конфигурация зависимостей всех модулей
-childProjects.values.forEach { rootProj ->
-    rootProj.childProjects.values.forEach { platformProj ->
-        platformProj.childProjects.values.forEach { typeProj ->
+childProjects.values.forEach { platformProj ->
 
-            // Ко всему, что баккит подключаем апи баккита
-            if (platformProj.name == "bukkit") {
-                typeProj.dependencies {
-                    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
-                    compileOnly("ru.spliterash:spring-spigot:1.0.11")
+    // Ко всему, что баккит подключаем апи баккита
+    if (platformProj.name == "bukkit") {
+        platformProj.allprojects {
+            dependencies {
+                compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+                compileOnly("ru.spliterash:spring-spigot:1.0.11")
+            }
+        }
+    }
+
+    // Ко всему, что майнстом подключаем апи майнстома
+    if (platformProj.name == "minestom") {
+        platformProj.allprojects {
+            dependencies {
+                compileOnly("com.github.Minestom.Minestom:Minestom:8ad2c7701f")
+            }
+        }
+    }
+
+    platformProj.childProjects.values.forEach { typeProj ->
+
+        if (typeProj.name != "plugin") {
+            findProject(":${platformProj.name}:plugin")?.apiDependency(typeProj)
+        }
+
+        typeProj.childProjects.values.forEach { featureProj ->
+
+            typeProj.apiDependency(featureProj)
+
+            if (featureProj.name != "core") {
+                findProject(":${platformProj.name}:${typeProj.name}:core")?.let {
+                    featureProj.apiDependency(it)
                 }
             }
 
-            // Ко всему, что майнстом подключаем апи майнстома
-            if (platformProj.name == "minestom") {
-                typeProj.dependencies {
-                    compileOnly("com.github.Minestom.Minestom:Minestom:8ad2c7701f")
+            if (typeProj.name != "internal") {
+                findProject(":${platformProj.name}:internal:${featureProj.name}")?.let {
+                    featureProj.apiDependency(it)
                 }
             }
 
-            // Если это не dist, то подключаем его к dist
-            // И публишим в репу
-            if (typeProj.name != "dist") {
-                findProject(":${rootProj.name}:${platformProj.name}:dist")?.let {
-                    it.dependencies { api(typeProj) }
-                    println("${it.path} depends on ${typeProj.path}")
-                }
-                typeProj.configurePublishing()
-            }
-
-            // Если это не api, подключаем к нему api
-            if (typeProj.name != "api") {
-                findProject(":${rootProj.name}:${platformProj.name}:api")?.let {
-                    typeProj.dependencies { api(it) }
-                    println("${typeProj.path} depends on ${it.path}")
-                }
-            }
-
-            // Если это не common, подключаем к нему common
             if (platformProj.name != "common") {
-                findProject(":${rootProj.name}:common:${typeProj.name}")?.let {
-                    typeProj.dependencies { api(it) }
-                    println("${typeProj.path} depends on ${it.path}")
+                findProject(":common:${typeProj.name}:${featureProj.name}")?.let {
+                    featureProj.apiDependency(it)
                 }
             }
 
-            // Если это не core, подключаем к нему core (но только апишки)
-            if (rootProj.name != "core") {
-                findProject(":core:${platformProj.name}:api")?.let {
-                    typeProj.dependencies { api(it) }
-                    println("${typeProj.path} depends on ${it.path}")
-                }
-            }
         }
     }
 }
