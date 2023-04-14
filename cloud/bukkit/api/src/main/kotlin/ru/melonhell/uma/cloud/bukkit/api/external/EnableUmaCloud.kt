@@ -3,7 +3,7 @@ package ru.melonhell.uma.cloud.bukkit.api.external
 import org.springframework.context.annotation.Import
 
 
-@Target(AnnotationTarget.TYPE)
+@Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-@Import(UmaCloudExternalBukkitConfiguration::class)
+@Import(EnableUmaCloudConfiguration::class)
 annotation class EnableUmaCloud

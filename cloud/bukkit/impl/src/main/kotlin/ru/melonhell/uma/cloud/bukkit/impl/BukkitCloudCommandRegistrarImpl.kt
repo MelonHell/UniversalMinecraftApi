@@ -7,17 +7,21 @@ import cloud.commandframework.bukkit.CloudBukkitCapabilities
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator
 import cloud.commandframework.meta.CommandMeta
 import cloud.commandframework.paper.PaperCommandManager
-import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.plugin.Plugin
 import org.springframework.stereotype.Component
-import ru.melonhell.uma.cloud.bukkit.api.external.BukkitCloudCommandRegister
+import ru.melonhell.uma.cloud.common.api.CloudCommandRegistrar
 import ru.melonhell.uma.core.bukkit.api.wrappers.BukkitCommandSender.Companion.unwrap
 import ru.melonhell.uma.core.bukkit.api.wrappers.BukkitCommandSender.Companion.wrap
+import ru.melonhell.uma.core.bukkit.api.wrappers.BukkitPlugin.Companion.unwrap
 import ru.melonhell.uma.core.common.api.wrappers.UmaCommandSender
+import ru.melonhell.uma.core.common.api.wrappers.UmaPlugin
 import java.util.function.Function
 
 @Component
-class BukkitCloudCommandRegisterImpl : BukkitCloudCommandRegister {
-    private val plugins = hashMapOf<JavaPlugin, BukkitCloudData>()
+class BukkitCloudCommandRegistrarImpl(
+    val globalPlugin: Plugin
+) : CloudCommandRegistrar {
+    private val plugins = hashMapOf<Plugin, BukkitCloudData>()
 
     private val parser = Function<ParserParameters, CommandMeta> { p: ParserParameters ->
         CommandMeta
@@ -26,16 +30,11 @@ class BukkitCloudCommandRegisterImpl : BukkitCloudCommandRegister {
             .build()
     }
 
-    override fun manager(plugin: JavaPlugin): PaperCommandManager<UmaCommandSender> =
-        plugins.computeIfAbsent(plugin, ::createManager).manager
-
-    override fun registerCommand(plugin: JavaPlugin, obj: Any) {
-        val cloudData = plugins.computeIfAbsent(plugin, ::createManager)
-
-        cloudData.annotationParser.parse(obj)
+    override fun registerCommand(obj: Any, plugin: UmaPlugin?) {
+        plugins.computeIfAbsent(plugin?.unwrap() ?: globalPlugin, ::createManager).annotationParser.parse(obj)
     }
 
-    private fun createManager(plugin: JavaPlugin): BukkitCloudData {
+    private fun createManager(plugin: Plugin): BukkitCloudData {
         val executionCoordinatorFunction = AsynchronousCommandExecutionCoordinator.builder<UmaCommandSender>().build()
         val manager = PaperCommandManager(
             plugin,
@@ -54,6 +53,6 @@ class BukkitCloudCommandRegisterImpl : BukkitCloudCommandRegister {
 
     private class BukkitCloudData(
         val manager: PaperCommandManager<UmaCommandSender>,
-        val annotationParser: AnnotationParser<UmaCommandSender>
+        val annotationParser: AnnotationParser<UmaCommandSender>,
     )
 }
