@@ -1,4 +1,4 @@
-package ru.melonhell.uma.core.common.api.math
+package ru.melonhell.uma.core.common.api.utiltypes
 
 data class BlockPos(
     val x: Int,

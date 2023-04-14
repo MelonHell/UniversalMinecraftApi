@@ -1,4 +1,4 @@
-package ru.melonhell.uma.core.common.api.math
+package ru.melonhell.uma.core.common.api.utiltypes
 
 data class Vector3D(
     val x: Double = 0.0,
