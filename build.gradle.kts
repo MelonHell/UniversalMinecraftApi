@@ -66,9 +66,18 @@ childProjects.values.forEach { platformProj ->
 
         if (typeProj.name != "plugin") {
             findProject(":${platformProj.name}:plugin")?.apiDependency(typeProj)
+            typeProj.configurePublishing()
+        }
+
+        if (typeProj.name != "internal") {
+            findProject(":${platformProj.name}:internal")?.let {
+                typeProj.apiDependency(it)
+            }
         }
 
         typeProj.childProjects.values.forEach { featureProj ->
+
+            featureProj.configurePublishing()
 
             typeProj.apiDependency(featureProj)
 

@@ -10,7 +10,10 @@ bukkit {
     authors = listOf("MelonHell")
     depend = listOf("SpringSpigot")
     softDepend = listOf("KotlinMc")
-    libraries = listOf()
+    libraries = listOf(
+        "cloud.commandframework:cloud-paper:1.8.2",
+        "cloud.commandframework:cloud-annotations:1.8.2"
+    )
 }
 
 tasks {
