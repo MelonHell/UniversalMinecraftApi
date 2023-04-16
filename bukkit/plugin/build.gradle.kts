@@ -8,8 +8,8 @@ bukkit {
     main = "ru.melonhell.uma.bukkit.plugin.UmaCoreBukkitPlugin"
     apiVersion = "1.13"
     authors = listOf("MelonHell")
-    depend = listOf("SpringSpigot")
-    softDepend = listOf("KotlinMc")
+    depend = listOf("SpringSpigot", "ProtocolLib")
+    softDepend = listOf("KotlinMc", "NmsEntityLib")
     libraries = listOf(
         "cloud.commandframework:cloud-paper:1.8.2",
         "cloud.commandframework:cloud-annotations:1.8.2"

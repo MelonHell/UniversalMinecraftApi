@@ -20,13 +20,16 @@ allprojects {
     repositories {
         mavenCentral()
         maven("https://jitpack.io/")
-        maven("https://repo.papermc.io/repository/maven-public/") // Paper API
         maven("https://repo.spliterash.ru/group/")
+        maven("https://repo.papermc.io/repository/maven-public/") // Paper API
+        maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
     }
 
     dependencies {
         api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         api("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.4")
+
+        api("org.greenrobot:eventbus-java:3.3.1")
 
         api("org.springframework.boot:spring-boot-starter:3.0.5")
         api("javax.annotation:javax.annotation-api:1.3.2")
@@ -49,6 +52,9 @@ childProjects.values.forEach { platformProj ->
             dependencies {
                 compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
                 compileOnly("ru.spliterash:spring-spigot:1.0.11")
+
+                compileOnly("ru.melonhell:NmsEntityLib:1.0.2")
+                compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
             }
         }
     }
@@ -83,12 +89,6 @@ childProjects.values.forEach { platformProj ->
 
             if (featureProj.name != "core") {
                 findProject(":${platformProj.name}:${typeProj.name}:core")?.let {
-                    featureProj.apiDependency(it)
-                }
-            }
-
-            if (typeProj.name != "internal") {
-                findProject(":${platformProj.name}:internal:${featureProj.name}")?.let {
                     featureProj.apiDependency(it)
                 }
             }
