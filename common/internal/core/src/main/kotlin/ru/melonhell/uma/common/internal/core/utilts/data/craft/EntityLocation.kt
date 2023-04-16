@@ -1,4 +1,7 @@
-package ru.melonhell.uma.common.internal.core.utiltypes
+package ru.melonhell.uma.common.internal.core.utilts.data.craft
+
+import ru.melonhell.uma.common.internal.core.utilts.data.math.Transform
+import ru.melonhell.uma.common.internal.core.utilts.data.math.Vector3D
 
 data class EntityLocation(
     val position: Vector3D,
@@ -15,4 +18,7 @@ data class EntityLocation(
 
     val yaw: Float get() = look.yaw
     val pitch: Float get() = look.pitch
+
+    val transform by lazy { Transform(position, look.rotation) }
+    val transformWithNoPitch by lazy { Transform(position, Look(look.yaw, 0f).rotation) }
 }

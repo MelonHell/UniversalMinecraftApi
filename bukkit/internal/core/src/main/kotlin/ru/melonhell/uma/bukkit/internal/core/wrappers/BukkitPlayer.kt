@@ -4,7 +4,7 @@ import net.kyori.adventure.audience.Audience
 import org.bukkit.entity.Player
 import ru.melonhell.uma.bukkit.internal.core.utils.convert.uma
 import ru.melonhell.uma.bukkit.internal.core.wrappers.BukkitWorld.Companion.wrap
-import ru.melonhell.uma.common.internal.core.utiltypes.EntityLocation
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.EntityLocation
 import ru.melonhell.uma.common.internal.core.wrappers.UmaPlayer
 import ru.melonhell.uma.common.internal.core.wrappers.UmaWorld
 import java.util.*

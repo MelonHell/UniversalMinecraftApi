@@ -1,6 +1,6 @@
 package ru.melonhell.uma.common.internal.camera
 
-import ru.melonhell.uma.common.internal.core.utiltypes.EntityLocation
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.EntityLocation
 import ru.melonhell.uma.common.internal.core.wrappers.UmaExtension
 import ru.melonhell.uma.common.internal.core.wrappers.UmaPlayer
 

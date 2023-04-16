@@ -9,7 +9,7 @@ import ru.melonhell.uma.common.internal.camera.Camera
 import ru.melonhell.uma.common.internal.camera.CameraFocus
 import ru.melonhell.uma.common.internal.camera.CameraService
 import ru.melonhell.uma.common.internal.camera.CameraSettings
-import ru.melonhell.uma.common.internal.core.utiltypes.EntityLocation
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.EntityLocation
 import ru.melonhell.uma.common.internal.core.wrappers.UmaExtension
 import ru.melonhell.uma.common.internal.core.wrappers.UmaPlayer
 

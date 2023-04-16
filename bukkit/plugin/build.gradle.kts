@@ -12,7 +12,9 @@ bukkit {
     softDepend = listOf("KotlinMc", "NmsEntityLib")
     libraries = listOf(
         "cloud.commandframework:cloud-paper:1.8.2",
-        "cloud.commandframework:cloud-annotations:1.8.2"
+        "cloud.commandframework:cloud-annotations:1.8.2",
+
+        "org.apache.commons:commons-geometry-euclidean:1.0",
     )
 }
 

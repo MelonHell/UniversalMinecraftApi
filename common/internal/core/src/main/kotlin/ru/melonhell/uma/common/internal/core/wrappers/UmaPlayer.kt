@@ -1,7 +1,7 @@
 package ru.melonhell.uma.common.internal.core.wrappers
 
 import net.kyori.adventure.audience.Audience
-import ru.melonhell.uma.common.internal.core.utiltypes.EntityLocation
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.EntityLocation
 import java.util.*
 
 interface UmaPlayer : UmaCommandSender, Audience {

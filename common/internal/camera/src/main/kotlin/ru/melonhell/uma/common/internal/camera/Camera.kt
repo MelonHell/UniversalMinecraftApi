@@ -1,7 +1,7 @@
 package ru.melonhell.uma.common.internal.camera
 
 import ru.melonhell.uma.common.internal.camera.listeners.CameraListener
-import ru.melonhell.uma.common.internal.core.utiltypes.EntityLocation
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.EntityLocation
 
 interface Camera {
     var radius: Double

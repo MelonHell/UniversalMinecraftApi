@@ -2,7 +2,7 @@ package ru.melonhell.uma.minestom.internal.core.wrappers
 
 import net.kyori.adventure.audience.Audience
 import net.minestom.server.entity.Player
-import ru.melonhell.uma.common.internal.core.utiltypes.EntityLocation
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.EntityLocation
 import ru.melonhell.uma.common.internal.core.wrappers.UmaPlayer
 import ru.melonhell.uma.common.internal.core.wrappers.UmaWorld
 import ru.melonhell.uma.minestom.internal.core.utils.convert.uma

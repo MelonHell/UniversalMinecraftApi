@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.springframework.stereotype.Component
 import ru.melonhell.uma.bukkit.internal.core.events.PlayerOpenVehicleInventoryEvent
 import ru.melonhell.uma.bukkit.internal.core.events.PlayerSteerVehicleEvent
-import ru.melonhell.uma.common.internal.core.utiltypes.SteerInput
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.SteerInput
 
 @Component
 class PacketListener(

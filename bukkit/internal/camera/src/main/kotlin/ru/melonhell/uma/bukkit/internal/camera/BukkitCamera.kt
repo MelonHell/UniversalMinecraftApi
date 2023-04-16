@@ -21,8 +21,8 @@ import ru.melonhell.uma.common.internal.camera.listeners.CameraDisconnectListene
 import ru.melonhell.uma.common.internal.camera.listeners.CameraInputListener
 import ru.melonhell.uma.common.internal.camera.listeners.CameraListener
 import ru.melonhell.uma.common.internal.camera.listeners.CameraOpenInventoryListener
-import ru.melonhell.uma.common.internal.core.utiltypes.EntityLocation
-import ru.melonhell.uma.common.internal.core.utiltypes.SteerInput
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.EntityLocation
+import ru.melonhell.uma.common.internal.core.utilts.data.craft.SteerInput
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.cos
 import kotlin.math.sin

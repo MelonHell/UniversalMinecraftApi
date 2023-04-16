@@ -1,4 +1,4 @@
-package ru.melonhell.uma.common.internal.core.utiltypes
+package ru.melonhell.uma.common.internal.core.utilts.data.craft
 
 data class SteerInput(
     val isForward: Boolean = false,

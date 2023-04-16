@@ -35,6 +35,8 @@ allprojects {
         api("javax.annotation:javax.annotation-api:1.3.2")
 
         api("net.kyori:adventure-api:4.13.0")
+
+        api("org.apache.commons:commons-geometry-euclidean:1.0")
     }
 }
 
