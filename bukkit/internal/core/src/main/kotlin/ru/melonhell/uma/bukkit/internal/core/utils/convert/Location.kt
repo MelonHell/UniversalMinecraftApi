@@ -10,3 +10,5 @@ fun Vector3D.bukkitLocation(world: World?) = Location(world, x, y, z)
 fun Vector3D.bukkit() = Vector(x, y, z)
 
 fun EntityLocation.bukkit(world: World?) = Location(world, x, y, z, yaw, pitch)
+
+fun Location.uma() = EntityLocation(x, y, z, yaw, pitch)
