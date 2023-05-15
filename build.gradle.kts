@@ -56,7 +56,7 @@ childProjects.values.forEach { platformProj ->
                 compileOnly("ru.spliterash:spring-spigot:1.0.11")
 
                 compileOnly("ru.melonhell:NmsEntityLib:1.0.2")
-                compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
+                compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0")
             }
         }
     }

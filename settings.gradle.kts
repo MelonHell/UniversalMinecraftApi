@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven("https://repo.spliterash.ru/group/")
+    }
+}
+
 rootProject.name = "Uma"
 
 val platforms = listOf("common", "bukkit", "minestom")
