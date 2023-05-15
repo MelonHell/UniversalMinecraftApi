@@ -40,8 +40,9 @@ class BukkitCamera(
     override var zoomEnabled: Boolean,
     override var zoomMinRadius: Double,
     override var zoomMaxRadius: Double,
-) : Camera {
 
+    val autoTick: Boolean
+) : Camera {
 
     private val chairEntity: Entity
     override var removed: Boolean = false

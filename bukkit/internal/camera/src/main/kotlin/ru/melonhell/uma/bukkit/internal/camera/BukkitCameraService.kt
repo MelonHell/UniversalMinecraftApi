@@ -1,5 +1,6 @@
 package ru.melonhell.uma.bukkit.internal.camera
 
+import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.springframework.stereotype.Component
 import ru.melonhell.nmsentitylib.NmsEntityLib
@@ -16,10 +17,18 @@ import ru.melonhell.uma.common.internal.core.wrappers.UmaPlayer
 @Component
 class BukkitCameraService(
     private val nmsEntityLib: NmsEntityLib,
-    private val globalPlugin: Plugin
+    private val globalPlugin: Plugin,
 ) : CameraService {
 
     private val cameras: MutableMap<UmaPlayer, Camera> = HashMap()
+
+    init {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(globalPlugin, Runnable {
+            cameras.values.forEach {
+                if (it is BukkitCamera && it.autoTick) it.tick()
+            }
+        }, 0, 1)
+    }
 
     override fun create(
         player: UmaPlayer,
@@ -38,7 +47,8 @@ class BukkitCameraService(
             cameraSettings.radius,
             cameraSettings.zoomEnabled,
             cameraSettings.zoomMinRadius,
-            cameraSettings.zoomMaxRadius
+            cameraSettings.zoomMaxRadius,
+            cameraSettings.autoTick
         ).apply {
             cameras[player] = this
         }
