@@ -6,7 +6,6 @@ import com.comphenix.protocol.events.ListenerPriority
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
 import com.comphenix.protocol.wrappers.EnumWrappers
-import jakarta.annotation.PostConstruct
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.springframework.stereotype.Component
@@ -25,8 +24,7 @@ class PacketListener(
         PacketType.Play.Client.ENTITY_ACTION
     )
 ) {
-    @PostConstruct
-    fun init() {
+    init {
         ProtocolLibrary.getProtocolManager().addPacketListener(this)
     }
 
