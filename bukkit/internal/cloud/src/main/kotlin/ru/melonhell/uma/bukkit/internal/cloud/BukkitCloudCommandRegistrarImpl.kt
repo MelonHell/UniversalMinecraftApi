@@ -1,5 +1,6 @@
 package ru.melonhell.uma.bukkit.internal.cloud
 
+import cloud.commandframework.CommandManager
 import cloud.commandframework.annotations.AnnotationParser
 import cloud.commandframework.arguments.parser.ParserParameters
 import cloud.commandframework.arguments.parser.StandardParameters
@@ -45,6 +46,7 @@ class BukkitCloudCommandRegistrarImpl(
 
         if (manager.hasCapability(CloudBukkitCapabilities.BRIGADIER)) manager.registerBrigadier()
         if (manager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) manager.registerAsynchronousCompletions()
+        manager.setSetting(CommandManager.ManagerSettings.ALLOW_UNSAFE_REGISTRATION, true)
         val annotationParser = AnnotationParser(manager, UmaCommandSender::class.java, parser)
 
         return BukkitCloudData(manager, annotationParser)
@@ -53,6 +55,6 @@ class BukkitCloudCommandRegistrarImpl(
 
     private class BukkitCloudData(
         val manager: PaperCommandManager<UmaCommandSender>,
-        val annotationParser: AnnotationParser<UmaCommandSender>,
+        val annotationParser: AnnotationParser<UmaCommandSender>
     )
 }
