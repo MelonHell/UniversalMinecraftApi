@@ -23,6 +23,7 @@ allprojects {
         maven("https://repo.spliterash.ru/group/")
         maven("https://repo.papermc.io/repository/maven-public/") // Paper API
         maven("https://repo.dmulloy2.net/repository/public/") // ProtocolLib
+        maven("https://repo.xenondevs.xyz/releases") // Nova
     }
 
     dependencies {
@@ -57,6 +58,10 @@ childProjects.values.forEach { platformProj ->
 
                 compileOnly("ru.melonhell:NmsEntityLib:1.0.2")
                 compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0")
+
+                // item providers
+                compileOnly("com.github.LoneDev6:API-ItemsAdder:3.4.1-r4")
+                compileOnly("xyz.xenondevs.nova:nova-api:0.13")
             }
         }
     }
