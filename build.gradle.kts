@@ -123,11 +123,10 @@ fun Project.configurePublishing() {
         repositories {
             mavenLocal()
             maven {
-                name = "repo.spliterash"
-                url = uri("https://repo.spliterash.ru/" + rootProject.name)
+                url = uri("https://maven.melonhell.ru/public/")
                 credentials {
-                    username = findProperty("SPLITERASH_NEXUS_USR")?.toString()
-                    password = findProperty("SPLITERASH_NEXUS_PSW")?.toString()
+                    username = findProperty("MELONHELL_REPO_USR")?.toString()
+                    password = findProperty("MELONHELL_REPO_PSW")?.toString()
                 }
             }
         }
